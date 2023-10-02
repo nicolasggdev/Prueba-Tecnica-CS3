@@ -26,7 +26,7 @@ To view the project documentation, you need to download it locally. You must ins
 
 ## Deploy
 
-<b> Pending, it has not yet gone into production. </b>
+<b> https://prueba-tecnica-cs3.up.railway.app </b>
 
 ## Start the project
 
@@ -115,7 +115,7 @@ Para visualizar la documentación del proyecto, es necesario descargarlo localme
 
 ## Deploy
 
-<b> Pendiente, aún no ha salido a producción. </b>
+<b> https://prueba-tecnica-cs3.up.railway.app </b>
 
 ## Inicia el proyecto
 
