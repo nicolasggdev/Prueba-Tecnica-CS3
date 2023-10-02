@@ -6,16 +6,11 @@ import {
   IsNumber,
   Min,
   IsPositive,
-  IsDate,
   IsInt,
   IsArray,
   ArrayMinSize,
   ValidateNested
 } from "class-validator";
-
-function parseISODate(dateString: string): Date {
-  return new Date(dateString.replace(/\.\d+Z$/, "Z"));
-}
 
 class InvoiceDetail {
   @IsInt()
@@ -37,10 +32,12 @@ export class CreateInvoiceDto {
   @MinLength(1)
   number: string;
 
-  @Transform(({ value }) => parseISODate(value))
   @IsNotEmpty()
-  @IsDate({ message: "missionDate must be a datetime ('YYYY-MM-DDTHH:mm:ss')." })
-  missionDate: Date;
+  @IsString({
+    message:
+      "missionDate must be a datetime ('YYYY-MM-DDTHH:mm:ss'). Example: 2023-10-01T10:50:13.000Z"
+  })
+  missionDate: string;
 
   @IsNotEmpty()
   @IsNumber()

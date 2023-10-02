@@ -34,7 +34,9 @@ export class InvoicesService {
 
     const { currentUser } = req;
 
-    const { thirdPartyInvoicedId: id } = createInvoiceDto;
+    const { thirdPartyInvoicedId: id, missionDate } = createInvoiceDto;
+
+    const missionDateFormat: Date = new Date(missionDate);
 
     const findThirdPartyInvoiced = await this.thirdPartyInvoicedRepository.findOneBy({ id });
 
@@ -64,7 +66,7 @@ export class InvoicesService {
     if (lastInvoice.length !== 0) {
       const missionDateLastInvoice: string = new Date(lastInvoice[0].missionDate).toString();
 
-      const currentMissionDate: string = new Date(createInvoiceDto.missionDate).toString();
+      const currentMissionDate: string = missionDateFormat.toString();
 
       if (Date.parse(missionDateLastInvoice) > Date.parse(currentMissionDate)) {
         console.error("You cannot create backdated invoices");

@@ -7,7 +7,6 @@ export class PaginationQueryDto {
   limit: number;
 
   @IsNumber()
-  @IsPositive()
   @IsOptional()
   offset: number;
 }
