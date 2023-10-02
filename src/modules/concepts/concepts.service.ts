@@ -1,4 +1,5 @@
 import { Repository } from "typeorm";
+import { AppGateway } from "src/gateway/gateway";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Concept } from "./entities/concept.entity";
 import { Injectable, HttpStatus } from "@nestjs/common";
@@ -9,7 +10,10 @@ import { sendResponses } from "src/utils/services/sendResponse.services";
 
 @Injectable()
 export class ConceptsService {
-  constructor(@InjectRepository(Concept) private readonly conceptRepository: Repository<Concept>) {}
+  constructor(
+    @InjectRepository(Concept) private readonly conceptRepository: Repository<Concept>,
+    private readonly appGateway: AppGateway
+  ) {}
 
   async create(createConceptDto: CreateConceptDto, res: any) {
     console.log("Start concept creation");
@@ -19,6 +23,10 @@ export class ConceptsService {
     await this.conceptRepository.save(newConcept);
 
     console.log("Successful completion of concept creation");
+
+    const notificationData = { message: "The concept was correctly created" };
+
+    this.appGateway.sendNotificationToClients("concepts-notification", notificationData);
 
     return sendResponses(res, HttpStatus.CREATED, newConcept, "Information processed successfully");
   }
@@ -38,6 +46,10 @@ export class ConceptsService {
 
     console.log("Successfully completes the query of all concepts");
 
+    const notificationData = { message: "All concepts were correctly listed" };
+
+    this.appGateway.sendNotificationToClients("concepts-notification", notificationData);
+
     return sendResponses(res, HttpStatus.OK, concepts, "Information processed successfully");
   }
 
@@ -47,6 +59,10 @@ export class ConceptsService {
     const { concept } = req;
 
     console.log("Successful completion of concept query by id");
+
+    const notificationData = { message: "The concept was correctly listed" };
+
+    this.appGateway.sendNotificationToClients("concepts-notification", notificationData);
 
     return sendResponses(res, HttpStatus.OK, concept, "Information processed successfully");
   }
@@ -82,6 +98,10 @@ export class ConceptsService {
 
     console.log("Successful completion of concept update");
 
+    const notificationData = { message: "The concept was correctly updated" };
+
+    this.appGateway.sendNotificationToClients("concepts-notification", notificationData);
+
     return sendResponses(
       res,
       HttpStatus.OK,
@@ -98,6 +118,10 @@ export class ConceptsService {
     await this.conceptRepository.softDelete({ id });
 
     console.log("Successful completion of concept elimination");
+
+    const notificationData = { message: "The concept was correctly deleted" };
+
+    this.appGateway.sendNotificationToClients("concepts-notification", notificationData);
 
     return sendResponses(res, HttpStatus.OK, null, "Information processed successfully");
   }

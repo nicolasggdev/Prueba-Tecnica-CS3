@@ -1,4 +1,5 @@
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { AppGateway } from "src/gateway/gateway";
 import { UsersModule } from "src/modules/users/users.module";
 import { AuthGuard } from "src/modules/auth/guard/auth.guard";
 import { ThirdPartyInvoiced } from "./entities/third-party-invoiced.entity";
@@ -11,8 +12,8 @@ import { ValidateNameThirdPartyInvoicedsMiddleware } from "./middlewares/validat
 @Module({
   imports: [TypeOrmModule.forFeature([ThirdPartyInvoiced]), UsersModule],
   controllers: [ThirdPartyInvoicedsController],
-  providers: [ThirdPartyInvoicedsService],
-  exports: [TypeOrmModule]
+  providers: [ThirdPartyInvoicedsService, AppGateway],
+  exports: [TypeOrmModule, AppGateway]
 })
 export class ThirdPartyInvoicedsModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

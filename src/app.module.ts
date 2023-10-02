@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { APP_GUARD } from "@nestjs/core";
+import { AppGateway } from "./gateway/gateway";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthModule } from "./modules/auth/auth.module";
 import { UsersModule } from "./modules/users/users.module";
@@ -45,6 +46,7 @@ import { ThirdPartyInvoicedsModule } from "./modules/third-party-invoiceds/third
   ],
   controllers: [],
   providers: [
+    AppGateway,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard

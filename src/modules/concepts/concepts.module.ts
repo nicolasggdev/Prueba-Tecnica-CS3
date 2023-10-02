@@ -1,4 +1,5 @@
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { AppGateway } from "src/gateway/gateway";
 import { Concept } from "./entities/concept.entity";
 import { ConceptsService } from "./concepts.service";
 import { ConceptsController } from "./concepts.controller";
@@ -10,8 +11,8 @@ import { ValidateConceptsMiddleware } from "./middlewares/validate-concepts.midd
 @Module({
   imports: [TypeOrmModule.forFeature([Concept]), UsersModule],
   controllers: [ConceptsController],
-  providers: [ConceptsService],
-  exports: [TypeOrmModule]
+  providers: [ConceptsService, AppGateway],
+  exports: [TypeOrmModule, AppGateway]
 })
 export class ConceptsModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

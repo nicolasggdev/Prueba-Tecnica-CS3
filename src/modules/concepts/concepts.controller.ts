@@ -1,5 +1,5 @@
-import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
 import { ConceptsService } from "./concepts.service";
+import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
 import { CreateConceptDto } from "./dto/create-concept.dto";
 import { UpdateConceptDto } from "./dto/update-concept.dto";
 import { PaginationQueryDto } from "src/utils/dto/pagination-query.dto";

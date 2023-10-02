@@ -1,13 +1,14 @@
 import { Repository } from "typeorm";
+import { AppGateway } from "src/gateway/gateway";
 import { InjectRepository } from "@nestjs/typeorm";
-import { sendResponses } from "src/utils/services/sendResponse.services";
 import { InvoiceDetail } from "./entities/invoice-detail.entity";
-import { PaginationQueryDto } from "src/utils/dto/pagination-query.dto";
 import { Concept } from "src/modules/concepts/entities/concept.entity";
 import { Invoice } from "src/modules/invoices/entities/invoice.entity";
-import { UpdateInvoiceDetailDto } from "./dto/update-invoice-detail.dto";
-import { CreateInvoiceDetailDto } from "./dto/create-invoice-detail.dto";
+import { PaginationQueryDto } from "src/utils/dto/pagination-query.dto";
 import { InvoicesService } from "src/modules/invoices/invoices.service";
+import { UpdateInvoiceDetailDto } from "./dto/update-invoice-detail.dto";
+import { sendResponses } from "src/utils/services/sendResponse.services";
+import { CreateInvoiceDetailDto } from "./dto/create-invoice-detail.dto";
 import { forwardRef, Injectable, HttpStatus, Inject } from "@nestjs/common";
 
 @Injectable()
@@ -20,7 +21,8 @@ export class InvoiceDetailsService {
     @InjectRepository(Invoice)
     private readonly invoiceRepository: Repository<Invoice>,
     @Inject(forwardRef(() => InvoicesService))
-    private invoiceService: InvoicesService
+    private invoiceService: InvoicesService,
+    private readonly appGateway: AppGateway
   ) {}
 
   async create(createInvoiceDetailDto: CreateInvoiceDetailDto, res: any) {
@@ -87,6 +89,10 @@ export class InvoiceDetailsService {
 
     console.log("Successfully completes the creation of the invoice detail.");
 
+    const notificationData = { message: "Invoice detail was correctly created" };
+
+    this.appGateway.sendNotificationToClients("invoice-details-notification", notificationData);
+
     return sendResponses(
       res,
       HttpStatus.OK,
@@ -118,6 +124,10 @@ export class InvoiceDetailsService {
 
     console.log("Successfully completed search of all invoice details");
 
+    const notificationData = { message: "All invoice details were correctly listed" };
+
+    this.appGateway.sendNotificationToClients("invoice-details-notification", notificationData);
+
     return sendResponses(res, HttpStatus.OK, invoiceDetails, "Information processed successfully");
   }
 
@@ -127,6 +137,10 @@ export class InvoiceDetailsService {
     const { invoiceDetail } = req;
 
     console.log("Successfully completed search for invoice detail by id");
+
+    const notificationData = { message: "Correctly listed the invoice detail" };
+
+    this.appGateway.sendNotificationToClients("invoice-details-notification", notificationData);
 
     return sendResponses(res, HttpStatus.OK, invoiceDetail, "Information processed successfully");
   }
@@ -193,6 +207,10 @@ export class InvoiceDetailsService {
 
     console.log("Successful completion of concept detail update");
 
+    const notificationData = { message: "The invoice detail was updated correctly" };
+
+    this.appGateway.sendNotificationToClients("invoice-details-notification", notificationData);
+
     return sendResponses(res, HttpStatus.OK, null, "Information processed successfully");
   }
 
@@ -230,6 +248,10 @@ export class InvoiceDetailsService {
     await this.invoiceDetailRepository.softDelete({ id });
 
     console.log("Successful completion of invoice detail deletion");
+
+    const notificationData = { message: "Invoice detail was deleted correctly" };
+
+    this.appGateway.sendNotificationToClients("invoice-details-notification", notificationData);
 
     return sendResponses(res, HttpStatus.OK, null, "Information processed successfully");
   }

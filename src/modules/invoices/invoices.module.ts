@@ -1,4 +1,5 @@
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { AppGateway } from "src/gateway/gateway";
 import { Invoice } from "./entities/invoice.entity";
 import { InvoicesService } from "./invoices.service";
 import { InvoicesController } from "./invoices.controller";
@@ -29,9 +30,10 @@ import { ThirdPartyInvoicedsService } from "src/modules/third-party-invoiceds/th
     ThirdPartyInvoicedsService,
     UsersService,
     ConceptsService,
-    InvoiceDetailsService
+    InvoiceDetailsService,
+    AppGateway
   ],
-  exports: [TypeOrmModule, InvoicesService]
+  exports: [TypeOrmModule, InvoicesService, AppGateway]
 })
 export class InvoicesModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
