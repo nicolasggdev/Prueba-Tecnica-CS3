@@ -1,12 +1,12 @@
-# DROOPPY - API
+# CS3 TEST - API
 
 La documentación está disponible en Español e Inglés, ambas contienen la misma información.
 
-Documentación en Español: [Documentación]()
+Documentación en Español: [Documentación](https://github.com/nicolasggdev/Prueba-Tecnica-CS3#versi%C3%B3n-en-espa%C3%B1ol)
 
 The documentation is available in Spanish and English, both contain the same information.
 
-Documentation in English: [Documentation]()
+Documentation in English: [Documentation](https://github.com/nicolasggdev/Prueba-Tecnica-CS3#english-version)
 
 ---
 
